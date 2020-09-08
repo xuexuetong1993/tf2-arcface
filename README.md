@@ -1,13 +1,11 @@
-# [arcface-tf2](https://github.com/peteryuX/arcface-tf2)
+# [arcface-tf2]多卡训练+训练数据增强（随机裁剪输入图片）+ tensorboard+ cosin learning rate
 
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/peteryuX/arcface-tf2.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/peteryuX/arcface-tf2/context:python)
-![Star](https://img.shields.io/github/stars/peteryuX/arcface-tf2)
-![Fork](https://img.shields.io/github/forks/peteryuX/arcface-tf2)
-![License](https://img.shields.io/github/license/peteryuX/arcface-tf2)
+![Star](https://github.com/xuexuetong1993/tf2-arcface)
+![Fork](https://github.com/xuexuetong1993/tf2-arcface)
+![License](https://github.com/xuexuetong1993/tf2-arcface)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/peteryuX/arcface-tf2/blob/master/notebooks/colab-github-demo.ipynb)
 
-:fire: ArcFace (Additive Angular Margin Loss for Deep Face Recognition, published in CVPR 2019) implemented in Tensorflow 2.0+. This is an unofficial implementation. :fire:
+:fire: ArcFace (Additive Angular Margin Loss for Deep Face Recognition, published in CVPR 2019) implemented in Tensorflow 2.3 multi cards train. This is an unofficial implementation. :fire:
 
 >  Additive Angular Margin Loss(ArcFace) has a clear geometric interpretation due to the exact correspondence to the geodesic distance on the hypersphere, and consistently outperforms the state-of-the-art and can be easily implemented with negligible computational overhead.
 
@@ -35,8 +33,8 @@ Create a new python virtual environment by [Anaconda](https://www.anaconda.com/)
 
 ### Clone this repo
 ```bash
-git clone https://github.com/peteryuX/arcface-tf2.git
-cd arcface-tf2
+git clone https://github.com/xuexuetong1993/tf2-arcface.git
+cd tf2-arcface
 ```
 
 ### Conda
@@ -143,7 +141,6 @@ python train.py --mode="fit" --cfg_path="./configs/arc_res50.yaml"
 
 ### Testing
 
-You can download my trained models for testing from [Benchmark and Models](#Benchmark-and-Models) without training it yourself. And, evaluate the models you got with the corresponding cfg file on the testing dataset. The testing code in [./modules/evaluations.py](https://github.com/peteryuX/arcface-tf2/blob/master/modules/evaluations.py) were modified from [face.evoLVe](https://github.com/ZhaoJ9014/face.evoLVe.PyTorch).
 
 ```bash
 python test.py --cfg_path="./configs/arc_res50.yaml"
@@ -162,17 +159,7 @@ python test.py --cfg_path="./configs/arc_res50.yaml" --img_path="./data/BruceLee
 ## Benchmark and Models
 :coffee:
 
-Verification results (%) of different backbone, head tpye, data augmentation and loss function.
-
-| Backbone | Head | Loss | CCrop | LFW | AgeDB-30 | CFP-FP | Download Link |
-|----------|------|------|-------|-----|--------|----------|---------------|
-| [ResNet50](https://arxiv.org/abs/1512.03385) | [ArcFace](https://arxiv.org/abs/1801.07698) | Softmax | False | 99.35 | 95.03  |  90.36   | [GoogleDrive](https://drive.google.com/file/d/1HasWQb86s4xSYy36YbmhRELg9LBmvhvt/view?usp=sharing) |
-| [MobileNetV2](https://arxiv.org/abs/1801.04381) | [ArcFace](https://arxiv.org/abs/1801.07698) | Softmax | False | 98.67 | 90.87  |  88.51   | [GoogleDrive](https://drive.google.com/file/d/1qG8BChcPHzKuGwjJhrpeIxBqQmhpLvTX/view?usp=sharing) |
-| [ResNet50](https://arxiv.org/abs/1512.03385) | [ArcFace](https://arxiv.org/abs/1801.07698) | Softmax | True | 99.28 | 94.82 | 93.14 | [GoogleDrive](https://drive.google.com/file/d/1zUulC-4hSY_kPqZpcoIHO96OmjMivuKB/view?usp=sharing) |
-| [MobileNetV2](https://arxiv.org/abs/1801.04381) | [ArcFace](https://arxiv.org/abs/1801.07698) | Softmax | True | 98.50 | 91.43 | 89.44 | [GoogleDrive](https://drive.google.com/file/d/1nSnIc0eV0MkSjg48x29PJwTt3fGXKDU4/view?usp=sharing) |
-
 Note:
-- The 'CCrop' tag above means doing central-cropping on both trainging and testing data, which could eliminate the redundant boundary of intput face data (especially for AgeDB-30).
 - All training settings of the models can be found in the corresponding [./configs/*.yaml](https://github.com/peteryuX/arcface-tf2/tree/master/configs) files.
 - **Based on the property of the training dataset, all the pre-trained models can only be used for non-commercial applications.**
 
@@ -182,7 +169,7 @@ Note:
 :hamburger:
 
 Thanks for these source codes porviding me with knowledges to complete this repository.
-
+- https://github.com/peteryuX/arcface-tf2
 - https://github.com/deepinsight/insightface (Official)
     - Face Analysis Project on MXNet http://insightface.ai
 - https://github.com/zzh8829/yolov3-tf2
