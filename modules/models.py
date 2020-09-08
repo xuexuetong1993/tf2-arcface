@@ -87,7 +87,7 @@ def NormHead(num_classes, w_decay=5e-4, name='NormHead'):
 def ArcFaceModel(size=None, channels=3, num_classes=None, name='arcface_model',
                  margin=0.5, logist_scale=64, embd_shape=512,
                  head_type='ArcHead', backbone_type='ResNet50',
-                 w_decay=5e-4, use_pretrain=True, training=False):
+                 w_decay=5e-4, use_pretrain=True, training=False, l2_norm=True):
     """Arc Face Model"""
     x = inputs = Input([size, size, channels], name='input_image')
 
@@ -111,4 +111,10 @@ def ArcFaceModel(size=None, channels=3, num_classes=None, name='arcface_model',
             logist = NormHead(num_classes=num_classes, w_decay=w_decay)(embds)
         return Model((inputs, labels), logist, name=name)
     else:
-        return Model(inputs, embds, name=name)
+        embds = tf.reshape(embds, [int(embd_shape),])
+        if l2_norm:
+            print("[*] using l2 norm in savedmodel")
+            embds = tf.math.l2_normalize(embds, axis=0, epsilon=1e-12, name="embds_l2")
+            return Model(inputs, embds, name=name)
+        else:
+            return Model(inputs, embds, name=name)

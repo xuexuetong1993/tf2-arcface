@@ -45,7 +45,8 @@ def main(_):
                              margin=float(cfg['margin']),
                              logist_scale=float(cfg['logist_scale']), 
                              training=False,
-                             use_pretrain=False)
+                             use_pretrain=False,
+                             l2_norm=True)
         parallel_model.summary(line_length=80)
 
         #optimizer = tf.keras.optimizers.SGD(learning_rate=cfg['base_lr'], momentum=0.9)
