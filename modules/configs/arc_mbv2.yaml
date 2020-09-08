@@ -1,0 +1,30 @@
+# general
+batch_size: 128
+input_size: 112
+embd_shape: 512
+sub_name: 'arc_mbv2'
+backbone_type: 'MobileNetV2' # 'ResNet50', 'MobileNetV2'
+head_type: ArcHead # 'ArcHead', 'NormHead'
+is_ccrop: False # central-cropping or not
+
+#arc params
+margin: 0.15 
+logist_scale: 30 
+checkpoint_dir: 'Checkpoints/arc_mbv2/'
+
+# train
+#train_dataset: 'data/GLDv2/gldv2_clean.tfrecord'
+train_dataset: 'data/GLDv2/gldv2_clean_sample_300.tfrecord'
+binary_img: True
+num_classes: 85742
+#num_samples: 5822653
+num_samples: 5000
+epochs: 5
+num_gpu: 8
+base_lr: 0.01
+w_decay: !!float 5e-4
+save_steps: 1000
+
+# test
+#test_dataset: 'data/GLDv2/gldv2_clean.tfrecord'
+test_dataset: 'data/GLDv2/gldv2_clean_sample_300.tfrecord'

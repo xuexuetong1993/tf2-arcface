@@ -1,0 +1,31 @@
+# general
+batch_size: 128
+input_size: 448
+embd_shape: 512 
+sub_name: 'arc_efn_B5_448'
+backbone_type: 'Efn_B5' # 'ResNet50', 'MobileNetV2', 'EfficientNet_B7'
+head_type: ArcHead # 'ArcHead', 'NormHead'
+is_ccrop: False # central-cropping or not
+
+#arc params
+margin: 0.15 
+logist_scale: 30 
+checkpoint_dir: " "
+imagenet_pretrain: 1
+
+# train
+#train_dataset: 'data/GLDv2/gldv2_clean.tfrecord'
+train_dataset: 'data/GLDv2/gldv2_clean_shuffle.tfrecord'
+binary_img: True
+num_classes: 81313
+num_samples: 1580470
+#num_samples: 300
+epochs: 50
+base_lr: 0.01
+
+w_decay: !!float 5e-4
+save_steps: 1000
+
+# test
+test_dataset: 'data/GLDv2/gldv2_clean.tfrecord'
+#test_dataset: 'data/GLDv2/gldv2_clean_sample_5k.tfrecord'
