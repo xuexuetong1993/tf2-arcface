@@ -2,7 +2,7 @@
 batch_size: 64
 input_size: 448
 embd_shape: 512 
-sub_name: 'arc_efn_B7_448'
+sub_name: 'arc_efn_B7_448_step2'
 backbone_type: 'Efn_B7' # 'ResNet50', 'MobileNetV2', 'EfficientNet_B7'
 head_type: ArcHead # 'ArcHead', 'NormHead'
 is_ccrop: False # central-cropping or not

@@ -9,8 +9,7 @@ from tensorflow.keras.layers import (
 from tensorflow.keras.applications import (
     MobileNetV2,
     ResNet50,
-    EfficientNetB7,
-    EfficientNetB5
+    EfficientNetB7
 )
 from .layers import (
     BatchNormalization,
@@ -35,9 +34,6 @@ def Backbone(backbone_type='ResNet50', use_pretrain=True):
                             weights=weights)(x_in)
         if backbone_type == 'Efn_B7':
             return EfficientNetB7(include_top=False,
-                            weights=weights)(x_in)
-        if backbone_type == 'Efn_B5':
-            return EfficientNetB5(include_top=False,
                             weights=weights)(x_in)
         elif backbone_type == 'MobileNetV2':
             return MobileNetV2(input_shape=x_in.shape[1:], include_top=False,
@@ -87,7 +83,7 @@ def NormHead(num_classes, w_decay=5e-4, name='NormHead'):
 def ArcFaceModel(size=None, channels=3, num_classes=None, name='arcface_model',
                  margin=0.5, logist_scale=64, embd_shape=512,
                  head_type='ArcHead', backbone_type='ResNet50',
-                 w_decay=5e-4, use_pretrain=True, training=False, l2_norm=True):
+                 w_decay=5e-4, use_pretrain=True, training=False):
     """Arc Face Model"""
     x = inputs = Input([size, size, channels], name='input_image')
 
@@ -111,10 +107,4 @@ def ArcFaceModel(size=None, channels=3, num_classes=None, name='arcface_model',
             logist = NormHead(num_classes=num_classes, w_decay=w_decay)(embds)
         return Model((inputs, labels), logist, name=name)
     else:
-        embds = tf.reshape(embds, [int(embd_shape),])
-        if l2_norm:
-            print("[*] using l2 norm in savedmodel")
-            embds = tf.math.l2_normalize(embds, axis=0, epsilon=1e-12, name="embds_l2")
-            return Model(inputs, embds, name=name)
-        else:
-            return Model(inputs, embds, name=name)
+        return Model(inputs, embds, name=name)
